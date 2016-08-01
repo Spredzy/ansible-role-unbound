@@ -16,4 +16,4 @@
 ---
 unbound_package_name: unbound
 unbound_service_name: unbound
-unbound_configuration_file_path: /var/unbound
+unbound_configuration_file_path: /etc/unbound
