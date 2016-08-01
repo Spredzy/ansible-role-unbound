@@ -1,4 +1,4 @@
-# Copyright 2016 Yanis Guenane <yanis+ansible@guenane.org>
+# Copyright 2016 Yanis Guenane <yanis+ansible@guenane>
 # Author: Yanis Guenane <yanis+ansible@guenane.org>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,6 +14,6 @@
 # limitations under the License.
 
 ---
-unbound_package_name: unbound
-unbound_service_name: unbound
-unbound_configuration_file_path: /var/unbound
+- name: Ensure the example.com.conf file is removed
+  file: path={{ unbound_configuration_file_path }}/conf.d/example.com.conf
+        state=absent

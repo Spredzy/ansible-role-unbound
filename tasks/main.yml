@@ -18,18 +18,26 @@
   include_vars: "{{ ansible_os_family }}.yml"
 
 - name: Install the unbound package
-  package: name=unbound
+  package: name={{ unbound_package_name }}
 
 - name: Configure the unbound configuration file
-  template: src=template.conf
-            dest={{ unbound_configuration_file_path }}/conf.d/{{ ansible_fqdn }}.conf
-  notify: reload unbound
+  template: src={{ item }}
+            dest={{ unbound_configuration_file_path }}/conf.d/{{ item }}
+            group=unbound
+  with_items:
+    - forward-zone.conf
+    - python.conf
+    - remote-control.conf
+    - server.conf
+    - stub-zone.conf
+  notify:
+    - unbound-checkconf
+    - restart unbound
 
 - name: Include platform specific tasks
   include:  "{{ ansible_os_family }}.yml"
-  when: ansible_os_family == 'FreeBSD'
 
 - name: Start the unbound service
-  service: name=unbound
+  service: name={{ unbound_service_name }}
            state=started
            enabled=yes
