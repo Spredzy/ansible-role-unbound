@@ -21,6 +21,5 @@
         owner=unbound
 
 - name: Integrate the proper include line in the unbound.conf file
-  lineinfile: dest={{ unbound_configuration_file_path }}/unbound.conf
-              line='include:{{ unbound_configuration_file_path }}/conf.d/{{ ansible_fqdn }}.conf'
-  notify: reload unbound
+  lineinfile: "dest={{ unbound_configuration_file_path }}/unbound.conf line='include: {{ unbound_configuration_file_path }}/conf.d/*.conf'"
+  notify: restart unbound
